@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 const APP_STORE_URL = 'https://testflight.apple.com/join/hrNvqqVD';
@@ -35,6 +35,9 @@ const FEATURES = [
     desc: "No subscriptions, no ads, no catches. Built by Poly students, for Poly students.",
   },
 ];
+
+// Triple the array so we always have clones on both sides
+const LOOPED_FEATURES = [...FEATURES, ...FEATURES, ...FEATURES];
 
 const HOW_STEPS = [
   {
@@ -87,7 +90,6 @@ function useNavScroll() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
-
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -101,7 +103,6 @@ function useResponsiveCardsPerView() {
 
   useEffect(() => {
     const onResize = () => setCardsPerView(getCardsPerView());
-
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
@@ -134,7 +135,6 @@ function Navbar() {
       <a href="/" className="nav-logo">
         <img src="/mustangmapsv1.png" alt="Mustang Maps" height="36" />
       </a>
-
       <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className="nav-cta">
         Get the App
       </a>
@@ -215,34 +215,64 @@ function Hero() {
 function FeatureCard({ feature }) {
   return (
     <article className="feature-card">
-      <div className="feature-icon">{feature.icon}</div>
-      <h3 className="feature-title">{feature.title}</h3>
-      <p className="feature-desc">{feature.desc}</p>
+      <div className="feature-card-inner">
+        <div className="feature-icon">{feature.icon}</div>
+        <h3 className="feature-title">{feature.title}</h3>
+        <p className="feature-desc">{feature.desc}</p>
+      </div>
     </article>
   );
 }
 
 function FeatureCarousel() {
   const cardsPerView = useResponsiveCardsPerView();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const maxIndex = Math.max(FEATURES.length - cardsPerView, 0);
 
-  const dotIndexes = useMemo(
-    () => Array.from({ length: maxIndex + 1 }, (_, index) => index),
-    [maxIndex]
-  );
+  // Start in the middle copy of the tripled array
+  const [trackIndex, setTrackIndex] = useState(FEATURES.length);
+  const [animated, setAnimated] = useState(true);
 
+  // Which real feature index are we at (for dots)
+  const realIndex = ((trackIndex % FEATURES.length) + FEATURES.length) % FEATURES.length;
+  const maxDotIndex = FEATURES.length - cardsPerView;
+  const dotIndex = Math.min(realIndex, maxDotIndex);
+
+  const goNext = () => {
+    setAnimated(true);
+    setTrackIndex((i) => i + 1);
+  };
+
+  const goPrev = () => {
+    setAnimated(true);
+    setTrackIndex((i) => i - 1);
+  };
+
+  const goToDot = (index) => {
+    setAnimated(true);
+    // Always jump to the middle copy at that dot position
+    setTrackIndex(FEATURES.length + index);
+  };
+
+  // After the slide animation finishes, silently snap back into the real section
   useEffect(() => {
-    setActiveIndex((currentIndex) => Math.min(currentIndex, maxIndex));
-  }, [maxIndex]);
-
-  const goToPreviousFeature = () => {
-    setActiveIndex((currentIndex) => (currentIndex === 0 ? maxIndex : currentIndex - 1));
-  };
-
-  const goToNextFeature = () => {
-    setActiveIndex((currentIndex) => (currentIndex === maxIndex ? 0 : currentIndex + 1));
-  };
+    // Upper boundary: entered the third copy
+    if (trackIndex >= FEATURES.length * 2) {
+      const timer = setTimeout(() => {
+        setAnimated(false);
+        setTrackIndex((i) => i - FEATURES.length);
+        setTimeout(() => setAnimated(true), 50);
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+    // Lower boundary: entered the first copy
+    if (trackIndex < FEATURES.length) {
+      const timer = setTimeout(() => {
+        setAnimated(false);
+        setTrackIndex((i) => i + FEATURES.length);
+        setTimeout(() => setAnimated(true), 50);
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [trackIndex]);
 
   return (
     <section className="features" id="features">
@@ -252,10 +282,10 @@ function FeatureCarousel() {
         </h2>
 
         <div className="feature-carousel-controls" aria-label="Feature carousel controls">
-          <button type="button" className="carousel-btn" onClick={goToPreviousFeature} aria-label="Previous feature">
+          <button type="button" className="carousel-btn" onClick={goPrev} aria-label="Previous feature">
             ←
           </button>
-          <button type="button" className="carousel-btn" onClick={goToNextFeature} aria-label="Next feature">
+          <button type="button" className="carousel-btn" onClick={goNext} aria-label="Next feature">
             →
           </button>
         </div>
@@ -267,24 +297,25 @@ function FeatureCarousel() {
             className="feature-carousel-track"
             style={{
               '--features-per-view': cardsPerView,
-              transform: `translateX(-${activeIndex * (100 / cardsPerView)}%)`,
+              transform: `translateX(-${trackIndex * (100 / cardsPerView)}%)`,
+              transition: animated ? 'transform 0.35s ease' : 'none',
             }}
           >
-            {FEATURES.map((feature) => (
-              <FeatureCard key={feature.title} feature={feature} />
+            {LOOPED_FEATURES.map((feature, i) => (
+              <FeatureCard key={i} feature={feature} />
             ))}
           </div>
         </div>
 
         <div className="feature-carousel-dots" aria-label="Feature carousel pages">
-          {dotIndexes.map((index) => (
+          {Array.from({ length: maxDotIndex + 1 }, (_, index) => (
             <button
               key={index}
               type="button"
-              className={`feature-carousel-dot ${activeIndex === index ? 'is-active' : ''}`}
-              onClick={() => setActiveIndex(index)}
+              className={`feature-carousel-dot ${dotIndex === index ? 'is-active' : ''}`}
+              onClick={() => goToDot(index)}
               aria-label={`Show feature slide ${index + 1}`}
-              aria-current={activeIndex === index ? 'true' : undefined}
+              aria-current={dotIndex === index ? 'true' : undefined}
             />
           ))}
         </div>
