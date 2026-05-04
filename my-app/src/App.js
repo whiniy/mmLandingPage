@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
-const APP_STORE_URL = 'https://testflight.apple.com/join/hrNvqqVD';
+const APP_STORE_URL = 'https://apps.apple.com/us/app/mustangmaps/id6762173770';
 
 const FEATURES = [
   {
