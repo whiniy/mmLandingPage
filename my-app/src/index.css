@@ -99,7 +99,7 @@ body {
 
 /* ─── Hero ─── */
 .hero {
-  min-height: 100svh;
+  height: auto;
   background: var(--forest);
   position: relative;
   overflow: hidden;
@@ -153,7 +153,7 @@ body {
 }
 
 .hero-left {
-  padding: 0 0 10rem 7rem;
+  padding: 0 0 4rem 7rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -302,7 +302,7 @@ body {
   position: relative;
   width: 420px;
   height: 580px;
-  margin-bottom: 12rem;
+  margin-bottom: 4rem;
   animation: floatIn 1s 0.3s ease both;
 }
 
@@ -409,7 +409,7 @@ body {
 /* ─── Features Carousel ─── */
 .features {
   background: linear-gradient(160deg, #ddeae0 0%, #cfe0d4 100%);
-  padding: var(--section-padding-y) var(--section-padding-x);
+  padding: 10rem var(--section-padding-x);
 }
 
 .features-header {
