@@ -878,16 +878,17 @@ body {
 
   /* ── Hero phones: show below hero text, centered, smaller ── */
   .hero-right {
-    height: 300px;
-    align-items: flex-end;
+    height: auto;
+    align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
+    padding: 0.5rem 0 2.5rem;
   }
 
   .phones-wrapper {
     width: 280px;
-    height: 280px;
-    margin-bottom: 0;
+    height: 310px;
+    margin: 0 auto;
   }
 
   .phone-front {
