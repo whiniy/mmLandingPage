@@ -99,7 +99,7 @@ body {
 
 /* ─── Hero ─── */
 .hero {
-  height: 100vh;
+  min-height: 100svh;
   background: var(--forest);
   position: relative;
   overflow: hidden;
@@ -715,7 +715,7 @@ body {
   }
 }
 
-/* ─── Responsive ─── */
+/* ─── Responsive: Tablet ─── */
 @media (max-width: 900px) {
   :root {
     --section-padding-y: 4rem;
@@ -728,8 +728,12 @@ body {
   }
 
   .hero-inner {
-    grid-template-columns: 65fr 35fr;
+    grid-template-columns: 60fr 40fr;
     padding-top: 5rem;
+  }
+
+  .hero-left {
+    padding: 2rem 1rem 6rem 2.5rem;
   }
 
   .hero-desc {
@@ -737,25 +741,27 @@ body {
   }
 
   .hero-right {
-    height: 400px;
+    height: auto;
     align-items: center;
   }
 
   .phones-wrapper {
-    width: 320px;
-    height: 360px;
+    width: 260px;
+    height: 400px;
+    margin-bottom: 6rem;
   }
 
   .phone-front {
-    width: 175px;
-    height: 365px;
-    left: 30px;
+    width: 160px;
+    height: 335px;
+    left: 10px;
   }
 
   .phone-back {
-    width: 160px;
-    height: 340px;
-    right: 0;
+    width: 150px;
+    height: 310px;
+    left: 160px;
+    bottom: 20px;
   }
 
   .hero-divider {
@@ -803,8 +809,152 @@ body {
   }
 }
 
+/* ─── Responsive: Mobile ─── */
 @media (max-width: 600px) {
+  :root {
+    --section-padding-y: 3.5rem;
+    --section-padding-x: 1.25rem;
+    --section-title-offset: 0;
+    --section-title-bottom: 2rem;
+  }
+
+  /* ── Nav ── */
+  .nav {
+    padding: 0.9rem 1.25rem;
+  }
+
+  /* ── Hero: stack into single column ── */
+  .hero {
+    min-height: 100svh;
+    height: auto;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding-top: 4.5rem;
+    overflow: visible;
+    flex: unset;
+  }
+
+  .hero-left {
+    padding: 2rem 1.25rem 2.5rem 1.25rem;
+    justify-content: flex-start;
+  }
+
+  .hero-tag {
+    margin-bottom: 1.25rem;
+    font-size: 0.72rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.6rem, 10vw, 3.5rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-desc {
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .btn-appstore {
+    font-size: 0.88rem;
+    padding: 0.75rem 1.4rem;
+  }
+
   .hero-stats {
-    gap: 1.5rem;
+    gap: 2rem;
+  }
+
+  .stat-num {
+    font-size: 1.5rem;
+  }
+
+  /* ── Hero phones: show below hero text, centered, smaller ── */
+  .hero-right {
+    height: 300px;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .phones-wrapper {
+    width: 280px;
+    height: 280px;
+    margin-bottom: 0;
+  }
+
+  .phone-front {
+    width: 140px;
+    height: 290px;
+    left: 10px;
+    bottom: 0;
+    border-radius: 28px;
+  }
+
+  .phone-back {
+    width: 130px;
+    height: 265px;
+    left: 145px;
+    bottom: 15px;
+    border-radius: 26px;
+  }
+
+  /* ── Hero divider ── */
+  .hero-divider {
+    padding: 1.25rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-divider-text {
+    font-size: 0.8rem;
+  }
+
+  /* ── Section headings ── */
+  .section-heading {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    margin-left: 0;
+  }
+
+  /* ── Features ── */
+  .features-header {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .feature-card-inner {
+    padding: 1.75rem;
+  }
+
+  .feature-carousel-controls {
+    margin-left: 0;
+  }
+
+  /* ── Steps ── */
+  .step {
+    padding: 2rem 1.5rem;
+  }
+
+  .step-num {
+    font-size: 2.75rem;
+  }
+
+  /* ── CTA ── */
+  .cta-right {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 1.75rem 1.25rem;
+    gap: 0.75rem;
   }
 }
