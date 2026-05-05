@@ -154,7 +154,7 @@ body {
 }
 
 .hero-left {
-  padding: 0 0 4rem 7rem;
+  padding: 0 0 10rem 7rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -303,7 +303,7 @@ body {
   position: relative;
   width: 420px;
   height: 580px;
-  margin-bottom: 4rem;
+  margin-bottom: 12rem;
   animation: floatIn 1s 0.3s ease both;
 }
 
