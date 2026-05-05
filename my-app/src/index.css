@@ -99,6 +99,7 @@ body {
 
 /* ─── Hero ─── */
 .hero {
+  min-height: 100svh;
   height: auto;
   background: var(--forest);
   position: relative;
@@ -409,7 +410,7 @@ body {
 /* ─── Features Carousel ─── */
 .features {
   background: linear-gradient(160deg, #ddeae0 0%, #cfe0d4 100%);
-  padding: 10rem var(--section-padding-x);
+  padding: 5rem var(--section-padding-x);
 }
 
 .features-header {
@@ -417,7 +418,7 @@ body {
   align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .features-header .section-heading {
