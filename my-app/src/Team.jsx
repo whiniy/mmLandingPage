@@ -68,9 +68,9 @@ const TEAM = [
     initials: 'SKP',
     name: 'Scout Knight-Pheng',
     role: 'Developer',
-    year: 'Year Here',
-    major: 'Major Here',
-    funFact: 'Fun fact here.',
+    year: '1st Year',
+    major: 'Computer Science',
+    funFact: 'I can juggle.',
   },
   {
     photo: '/daniel.png',
@@ -88,7 +88,7 @@ const TEAM = [
     role: 'Developer',
     year: '2nd Year',
     major: 'Computer Science',
-    funFact: 'Fun fact here.',
+    funFact: 'I grew up doing ballet.',
   },
   {
     photo: '/nick.png',
