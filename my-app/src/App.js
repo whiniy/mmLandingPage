@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import TeamPage from './Team';
 
 const APP_STORE_URL = 'https://apps.apple.com/us/app/mustangmaps/id6762173770';
 
@@ -135,6 +137,8 @@ function Navbar() {
       <a href="/" className="nav-logo">
         <img src="/mustangmapsv1.png" alt="Mustang Maps" height="36" />
       </a>
+      {/* ── Added Meet the Team link ── */}
+      <Link to="/team" className="nav-team-link">Meet the Team</Link>
       <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className="nav-cta">
         Get the App
       </a>
@@ -375,13 +379,15 @@ function Footer() {
       <span className="footer-logo">Mustang Maps</span>
       <div className="footer-links">
         <a href="https://calpoly.edu" target="_blank" rel="noopener noreferrer">Cal Poly</a>
+        {/* ── Added Meet the Team link ── */}
+        <Link to="/team">Meet the Team</Link>
       </div>
       <span className="footer-copy">© 2025 CodeBox · Cal Poly SLO</span>
     </footer>
   );
 }
 
-function App() {
+function HomePage() {
   return (
     <div className="App">
       <Navbar />
@@ -391,6 +397,17 @@ function App() {
       <CTASection />
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/team" element={<TeamPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
